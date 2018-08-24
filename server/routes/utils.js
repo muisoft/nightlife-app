@@ -8,7 +8,7 @@ module.exports = {
 
   signup(req, res) {
     let { username, email, password } = req.body;
-    User.findOne({ username: username}, (err, user) => {
+    User.findOne({ username: username }, (err, user) => {
       if (user) {
         console.log('Username already exists');
         res.json({
@@ -33,14 +33,14 @@ module.exports = {
 
     const client = Yelp.client(process.env.YELP_API_KEY);
     client.search({
-        term: 'food',
-        location: location
-      })
+      term: 'food',
+      location: location
+    })
       .then(response => {
-        
+
         formattedData(response.jsonBody.businesses, res);
       })
-      .catch(err => console.error('Get Error: '+err));
+      .catch(err => console.error('Get Error: ' + err));
   },
   addGoing(req, res) {
     let {
@@ -82,7 +82,7 @@ const getFood = (food) => {
     rating: food.rating,
     phone: food.phone,
     image_url: food.image_url,
-    url: food.url 
+    url: food.url
   }
 }
 let searchBussId = (bussid) => {
@@ -96,43 +96,54 @@ let searchBussId = (bussid) => {
   });
 }
 const formattedData = (data, res) => {
-  
-  Food.find({}, (err, foods) => {
-    console.error('Food: '+ err);
-    
-    //console.log('Yewo1: ' + JSON.stringify(foods));
-    let result = [];
-    data.forEach(datum => {
-      console.log('Yewo1: ' + JSON.stringify(datum));
-      foods.forEach(food => {
-        console.log('Yewo2: ' + JSON.stringify(food));
-        // Check if already stored bussiness id is in the result data
-        if (food.bussid === datum.id) {
-          // if found add going field to result data with the value, number of count found in the database.
-          // Otherwise, add going field with zero value. 
-          result.push(Object.assign({}, getFood(datum), {
-            going: food.count
-          }));
-        } else {
-          result.push(Object.assign({}, getFood(datum), {
-            going: 0
-          }));
-        }
-      })
-    });
-   
-   // Because we have duplicate data in our result, we first sort it by highest number of going,
-    // and then  make it unique by name
-     let uniqueResult = ((uniqueByName(result.sort((first, second) => {
-       return second.going - first.going;
-    }))));
 
+  Food.find({}, (err, foods) => {
+    let result = [];
+
+    console.error('Food: ' + err);
+
+    if (foods.length === 0) {
+
+      data.forEach(datum => {
+        result.push(Object.assign({}, getFood(datum), {
+          going: 0
+        }));
+      });
+    } else {
+
+      foods.forEach(food => {
+        //console.log('Yewo1: ' + JSON.stringify(datum));
+        data.forEach(datum => {
+          console.log('Yewo2: ' + JSON.stringify(food));
+          // Check if already stored bussiness id is in the result data
+          if (food.bussid === datum.id) {
+            // if found add going field to result data with the value, number of count found in the database.
+            // Otherwise, add going field with zero value. 
+            result.push(Object.assign({}, getFood(datum), {
+              going: food.count
+            }));
+          } else {
+            result.push(Object.assign({}, getFood(datum), {
+              going: 0
+            }));
+          }
+        })
+      })
+    }
     
-     // then sort it by id. but this last step is not necessarily needed
-     res.json(uniqueResult.sort((first, second) => {
-       return first.id - second.id;
-     }));
-  })
+
+  // Because we have duplicate data in our result, we first sort it by highest number of going,
+  // and then  make it unique by name
+  let uniqueResult = ((uniqueByName(result.sort((first, second) => {
+    return second.going - first.going;
+  }))));
+
+
+  // then sort it by id. but this last step is not necessarily needed
+  res.json(uniqueResult.sort((first, second) => {
+    return first.id - second.id;
+  }));
+  });
 }
 
 const uniqueByName = (results) => {
