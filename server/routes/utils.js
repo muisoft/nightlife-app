@@ -98,11 +98,14 @@ let searchBussId = (bussid) => {
 const formattedData = (data, res) => {
   
   Food.find({}, (err, foods) => {
+    console.error('Food: '+ err);
+    
     //console.log('Yewo1: ' + JSON.stringify(foods));
     let result = [];
     data.forEach(datum => {
+      console.log('Yewo1: ' + JSON.stringify(datum));
       foods.forEach(food => {
-        console.log('Yewo2: ' + JSON.stringify(datum));
+        console.log('Yewo2: ' + JSON.stringify(food));
         // Check if already stored bussiness id is in the result data
         if (food.bussid === datum.id) {
           // if found add going field to result data with the value, number of count found in the database.
