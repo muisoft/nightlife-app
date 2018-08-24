@@ -7,9 +7,9 @@ module.exports = () => {
     passport.use('twitter-login', new TwitterStrategy({
         consumerKey: process.env.TWITTER_API_KEY,
         consumerSecret: process.env.TWITTER_API_SECRET,
-        callbackURL: process.env.BASE_URL + '/auth/twitter/callback'
+        callbackURL: process.env.APP_BASE_URL + '/auth/twitter/callback'
     }, (accessToken, refreshToken, profile, done) => {
-        User.findOneAndUpdate(  
+        User.findOneAndUpdate(
             { 'twitter.twitterId': profile.id },
             {
                 'twitter.twitterId': profile.id,
@@ -18,12 +18,12 @@ module.exports = () => {
             },
             { upsert: 'true' })
             .exec((err, user) => {
-              if (err) return done(err);
-              if (user) {
-                return done(null, user);
-              } else {
-                  done(null,false);
-              }
-        })
+                if (err) return done(err);
+                if (user) {
+                    return done(null, user);
+                } else {
+                    done(null, false);
+                }
+            })
     }));
 }

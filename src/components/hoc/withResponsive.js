@@ -14,16 +14,11 @@ const withResponsive = function(ChildComponent) {
             this.handleWindowResize = this.handleWindowResize.bind(this);
         }
         handleWindowResize(){
-               // _.throttle(()=>{
                    this.setState({
-                    
                     isMobile:  window.innerWidth < 480,
                     isTablet: window.innerWidth >= 480 && window.innerWidth < 1024,
                     isDesktop: window.innerWidth > 1024
-                    
-                });
-               // }, 200);
-                
+                });        
         }
         componentDidMount = () => {
             this.handleWindowResize();

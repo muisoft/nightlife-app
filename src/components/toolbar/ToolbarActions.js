@@ -7,9 +7,7 @@ import { AccountMenu } from '../account';
 
 const ToolbarActions = ({ gotoLogin, gotoHome, pathname, user }) => {
     const actions = () => {
-        
             if (user.username) {
-                //if (pathname === '/books') {
                 return (
                     <div>
                         <Button icon onClick={gotoHome}>home</Button>
@@ -18,12 +16,6 @@ const ToolbarActions = ({ gotoLogin, gotoHome, pathname, user }) => {
                             username={user.username} />
                     </div>
                 )
-                //}
-               // return (
-                   // <AccountMenu
-                       // simplifiedMenu
-                        //username={user} />
-               // )
             } else {
                 return (
                     <div>

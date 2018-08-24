@@ -23,9 +23,9 @@ export const isSaved = (payload) => {
 }
 export const openDrawer = () => {
     return {
-         type: ActionType.OPEN_DRAWER
-     }
- }
+        type: ActionType.OPEN_DRAWER
+    }
+}
 export const resetAll = () => {
     return {
         type: ActionType.SIGN_OUT,
@@ -54,48 +54,48 @@ export const searchLoc = (payload) => {
     return postData('/search', payload, isSuccess);
 }
 export const getData = (url, done) => {
-  return (dispatch) => {
-      fetch(url,
-          {
-              headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json',
-                  'Cache': 'no-cache'
-              },
-              credentials: 'same-origin'
-          })
-          .then((response) => {
-              if (!response.ok) {
-                  throw Error(response.statusText);
-              }
-              return response;
-          })
-          .then((response) => response.json())
-          .then((response) => {
-              dispatch(done(response));
-          })
-          .catch((err) => console.error(err));
+    return (dispatch) => {
+        fetch(url,
+            {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Cache': 'no-cache'
+                },
+                credentials: 'same-origin'
+            })
+            .then((response) => {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                return response;
+            })
+            .then((response) => response.json())
+            .then((response) => {
+                dispatch(done(response));
+            })
+            .catch((err) => console.error(err));
     }
 }
 const postData = (url, payload, done) => {
 
-     return (dispatch) => {
-       fetch(url, {
-           method: 'POST',
-           body: JSON.stringify(payload),
-           credentials: 'same-origin',
-           headers: new Headers({
-              'Content-Type': 'application/json'
-           })
-       })
-         .then(res => {
-             if(!res.ok){
-                 throw Error(res.statusText);
-             }
-             return res;
-         })
-         .then(res => res.json())
-         .then(res => dispatch(done(res)))
-         .catch((err) => console.error('Yewo: '+ err));
-   }
+    return (dispatch) => {
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(payload),
+            credentials: 'same-origin',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            })
+        })
+            .then(res => {
+                if (!res.ok) {
+                    throw Error(res.statusText);
+                }
+                return res;
+            })
+            .then(res => res.json())
+            .then(res => dispatch(done(res)))
+            .catch((err) => console.error(err));
+    }
 }

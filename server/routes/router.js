@@ -48,7 +48,6 @@ router.post('/signup', (req, res) => {
 })
 
 router.post('/addgoing', (req, res) => {
-  console.log('Enter Going');
   addGoing(req, res);
 });
 

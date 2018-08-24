@@ -16,7 +16,6 @@ export const food = (state = initialState, action) => {
                 ...state,
                 foods: action.payload,
                 isSearch: false
-                //user: action.payload.user ? action.payload.user : null
             }
         case ActionType.ON_SIGNUP:
             return {
@@ -42,7 +41,6 @@ export const food = (state = initialState, action) => {
         case ActionType.ON_SIGN_IN:
             return {
                 ...state,
-                //message: action.payload,
                 user: action.user
             }
         case ActionType.SIGN_OUT:

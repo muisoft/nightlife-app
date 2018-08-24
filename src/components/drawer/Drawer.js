@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { NavigationDrawer, Button, Toolbar } from "react-md";
+import { NavigationDrawer, Button } from "react-md";
 
-import { withMainComponent, withResponsive } from "../hoc";
+import { withMainComponent } from "../hoc";
 
 import { Search } from "../search";
 import NavLink from "./NavLink";
@@ -22,7 +22,7 @@ class Drawer extends Component {
     });
   }
   render() {
-    let { navItems, location, children, user } = this.props;
+    let { navItems, children, user } = this.props;
     let { search } = this.state;
 
     const styles = {
@@ -62,7 +62,6 @@ class Drawer extends Component {
 
 Drawer.propTypes = {
   navItems: PropTypes.array,
-  location: PropTypes.object,
   children: PropTypes.element,
   user: PropTypes.object
 };

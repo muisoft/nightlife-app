@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
-import { Toolbar, Button } from 'react-md';
-import { Home } from './night';
-import { Account } from './account';
-import { AppToolbar, ToolbarActions } from './toolbar';
-import { Search } from './search';
-import { NavLink, Drawer } from './drawer';
-import { Routes } from './routes';
+import { Route } from 'react-router-dom';
 
-import './style/styles.css';
+import { AppToolbar } from './toolbar';
+import { Drawer } from './drawer';
+import { Routes } from './routes';
 import { withResponsive } from './hoc';
 
 
@@ -26,11 +21,8 @@ const navItems = [
 ]
 class App extends Component {
     
-    
     render() {
-        let { isMobile, isDesktop, isTablet } = this.props;
-        console.log(`Desktop3: ${isDesktop}  Tablet3: ${isTablet} Mobile3: ${isMobile}`);
-       // let { visible } = this.state;
+        let { isMobile} = this.props;
         
         const drawerProps = (location) => ({
             location: location,
@@ -60,34 +52,3 @@ class App extends Component {
 }
 
 export default withResponsive(App);
-
-
-
-/** 
-<Toolbar
-
-                                title={isMobile ? '' : "Night Outing"}
-                                nav={
-                                    isMobile ?
-                                        <Button
-                                            key="open"
-                                            icon
-                                            onClick={this.openDrawer.bind(this)}>
-                                            menu
-                            </Button>
-                                        : null
-                                }
-                                fixed
-                                colored
-                                children={<Search />}
-                                actions={!isMobile ? <ToolbarActions {...location} /> : null}>
-                            </Toolbar>
-                                <Switch key={location.pathname}>
-                                <Route exact path={navItems[0].to} location={location} component={Home}/>
-                                <Route path="/account/:type" location={location} component={Account} />
-                            </Switch>
-                            {isMobile ?
-                                <Sidebar {...sidebarProps} />: ''}
-                        </div>
-                    )} />
-**/

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Card, IconSeparator, FontIcon, Button, Grid, Cell } from 'react-md';
+import { Card, Button, Grid, Cell } from 'react-md';
 
 import { withMainComponent } from '../hoc';
 
 import RatingBar from './RatingBar';
-import { addNewGoing } from '../../actions';
 
 class Bar extends Component {
     constructor(props) {
@@ -24,7 +23,6 @@ class Bar extends Component {
         let { name, image_url, url, phone, review_count, rating, bussid, user } = this.props;
         let { going } = this.state;
         
-    
         return (
             <Card className="bar-card">
                      <Cell size={2}>
@@ -53,9 +51,7 @@ class Bar extends Component {
                            {going} <span>Going</span>
                        </Button>
                      </Cell>
-
             </Card>
-
         );
     }
 }

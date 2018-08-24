@@ -4,12 +4,9 @@ export const actionsWrapper = (props) => {
         getFoods: () => {
             props.getFoods();
         },
-       
         addGoing: (bussid) => {
             props.addNewGoing(bussid);
             alert('Successfully added');
-           
-           // e.preventDefault();
         },
         handleChange: (e, m) => {
             const target = m.target;
@@ -25,7 +22,7 @@ export const actionsWrapper = (props) => {
             //Reset previous search result
             props.resetPrevSearch();
             // then do new search
-            props.searchLoc({location: location});
+            props.searchLoc({ location: location });
         },
         onSignin: (e) => {
             e.preventDefault();
@@ -34,8 +31,8 @@ export const actionsWrapper = (props) => {
         onSignup: (e) => {
             e.preventDefault();
             let { username, email, password } = props.partialState;
-            
-            if (!username || !email  || !password) {
+
+            if (!username || !email || !password) {
                 alert('Field(s) is empty, fill it up');
                 return;
             } else {
@@ -43,12 +40,9 @@ export const actionsWrapper = (props) => {
             }
         },
         handleSignout: () => {
-            //props.resetAll();
             props.signout();
         },
         openDrawer: () => {
-            console.log('Drawer');
-            
             props.openDrawer();
         }
     }

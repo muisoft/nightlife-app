@@ -29,25 +29,3 @@ AppToolbar.PropTypes = {
 }
 
 export default AppToolbar;
-
-
-/**
-  <Toolbar
-                    id="app-toolbar"
-                    title={isMobile ? '' : "Night Outing"}
-                    nav={
-                        isMobile ?
-                            <Button
-                                key="open"
-                                icon
-                                onClick={openDrawer}>
-                                menu
-                            </Button>
-                            : null
-                    }
-                    fixed
-                    colored
-                    children={<Search />}
-                    actions={!isMobile ? <ToolbarActions {...location} /> : null}>
-                </Toolbar>
- **/

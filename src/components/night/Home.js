@@ -17,12 +17,9 @@ class Home extends Component {
     }
     render() {
         const { foods, isGoing, isSearch } = this.props;
-       // if (allbars.length === 0) {
-            //return <p>Loading...</p>;
-       // }
+      
         if (foods.length === 0 && !isSearch) {
             return (
-                
                 <div className="md-grid" style={{ marginTop: 90 }}>
                     <header className="md-cell md-cell--12" style={{height: '100%'}}>
                     <h1 className="md-cell md-cell--12  md-text-center" >Welcome, Do you have plan for night outing? </h1> 

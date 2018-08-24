@@ -5,9 +5,9 @@ const User = require('mongoose').model('User');
 const Food = require('mongoose').model('Food');
 
 module.exports = {
-
   signup(req, res) {
     let { username, email, password } = req.body;
+
     User.findOne({ username: username }, (err, user) => {
       if (user) {
         console.log('Username already exists');
@@ -27,47 +27,31 @@ module.exports = {
     });
   },
   searchFoods(req, res) {
-    let {
-      location
-    } = req.body;
+    let { location } = req.body;
 
     const client = Yelp.client(process.env.YELP_API_KEY);
-    client.search({
-      term: 'food',
-      location: location
-    })
+    client.search({ term: 'food', location: location })
       .then(response => {
-
         formattedData(response.jsonBody.businesses, res);
       })
-      .catch(err => console.error('Get Error: ' + err));
+      .catch(err => console.error(err));
   },
   addGoing(req, res) {
-    let {
-      bussid
-    } = req.body;
-    //Food.findOneAndUpdate({ bussid: bussid}, {})
+    let { bussid } = req.body;
+    
     Food.findOne({
       bussid: bussid
     }, (err, food) => {
       if (err) console.error(err);
       if (food) {
-        //food.bussid = bussid;
         food.count = food.count + 1;
         food.save();
-        res.json({
-          success: true
-        });
+        res.json({ success: true });
       } else {
-        let newfood = new Food({
-          bussid: bussid,
-          count: 1
-        });
+        let newfood = new Food({ bussid: bussid, count: 1 });
         newfood.save((err, nfood) => {
           if (err) console.error(err);
-          res.json({
-            success: true
-          });
+          res.json({ success: true });
         });
       }
     })
@@ -85,36 +69,21 @@ const getFood = (food) => {
     url: food.url
   }
 }
-let searchBussId = (bussid) => {
-  return Food.findOne({
-    bussid: bussid
-  }, (food) => {
-    if (food) {
-      return food.count
-    }
 
-  });
-}
 const formattedData = (data, res) => {
 
   Food.find({}, (err, foods) => {
     let result = [];
-
-    console.error('Food: ' + err);
-
+    // Firstly, we check if database is empty, i.e., if we have not already add data.
     if (foods.length === 0) {
-
       data.forEach(datum => {
         result.push(Object.assign({}, getFood(datum), {
           going: 0
         }));
       });
     } else {
-
       foods.forEach(food => {
-        //console.log('Yewo1: ' + JSON.stringify(datum));
         data.forEach(datum => {
-          console.log('Yewo2: ' + JSON.stringify(food));
           // Check if already stored bussiness id is in the result data
           if (food.bussid === datum.id) {
             // if found add going field to result data with the value, number of count found in the database.
@@ -130,19 +99,15 @@ const formattedData = (data, res) => {
         })
       })
     }
-    
-
-  // Because we have duplicate data in our result, we first sort it by highest number of going,
-  // and then  make it unique by name
-  let uniqueResult = ((uniqueByName(result.sort((first, second) => {
-    return second.going - first.going;
-  }))));
-
-
-  // then sort it by id. but this last step is not necessarily needed
-  res.json(uniqueResult.sort((first, second) => {
-    return first.id - second.id;
-  }));
+    // Because we have duplicate data in our result, we first sort it by highest number of going,
+    // and then  make it unique by name
+    let uniqueResult = ((uniqueByName(result.sort((first, second) => {
+      return second.going - first.going;
+    }))));
+    // then sort it by id. but this last step is not necessarily needed
+    res.json(uniqueResult.sort((first, second) => {
+      return first.id - second.id;
+    }));
   });
 }
 

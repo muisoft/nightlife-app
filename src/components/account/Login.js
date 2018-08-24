@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, TextField, Card, FontIcon, Divider } from 'react-md/lib';
+import { Button, TextField, FontIcon, Divider } from 'react-md/lib';
 
 import { withMainComponent } from '../hoc';
 
-const Login = ({ onSignin, partialState, gotoTwitter, user, handleChange, location, history }) => {
+const Login = ({ onSignin, handleChange }) => {
     const styles = {
         submitButton: {
             marginTop: 15
@@ -74,7 +74,6 @@ const Login = ({ onSignin, partialState, gotoTwitter, user, handleChange, locati
 
 Login.PropTypes = {
     onSignin: PropTypes.func.isRequired,
-    partialState: PropTypes.object,
     user: PropTypes.object,
     handleChange: PropTypes.func.isRequired,
 }
