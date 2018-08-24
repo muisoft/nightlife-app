@@ -37,11 +37,6 @@ module.exports = {
         location: location
       })
       .then(response => {
-        // console.log('Result1: ' + formattedData(response.jsonBody.businesses));
-        //console.log('Result: ' + JSON.stringify(formattedData(response.jsonBody.businesses)));
-
-        //formattedData(response.jsonBody.businesses, ( h => res.json(h)));
-        console.log('Bus: ' + JSON.stringify(response.jsonBody.businesses));
         
         formattedData(response.jsonBody.businesses, res);
       })
@@ -119,12 +114,14 @@ const formattedData = (data, res) => {
         }
       })
     });
+    console.log('Result: '+ JSON.stringify(result));
+    
    // Because we have duplicate data in our result, we first sort it by highest number of going,
     // and then  make it unique by name
      let uniqueResult = ((uniqueByName(result.sort((first, second) => {
        return second.going - first.going;
     }))));
-    console.log('Yewo: '+ JSON.stringify(uniqueResult));
+
     
      // then sort it by id. but this last step is not necessarily needed
      res.json(uniqueResult.sort((first, second) => {
