@@ -98,10 +98,10 @@ let searchBussId = (bussid) => {
 const formattedData = (data, res) => {
   
   Food.find({}, (err, foods) => {
-    console.log('Yewo1: ' + JSON.stringify(foods));
+    //console.log('Yewo1: ' + JSON.stringify(foods));
     let result = [];
-    foods.forEach(food => {
-      data.forEach(datum => {
+    data.forEach(datum => {
+      foods.forEach(food => {
         console.log('Yewo2: ' + JSON.stringify(datum));
         // Check if already stored bussiness id is in the result data
         if (food.bussid === datum.id) {
