@@ -96,10 +96,12 @@ let searchBussId = (bussid) => {
   });
 }
 const formattedData = (data, res) => {
+  console.log('Yewo1: ' + JSON.stringify(data));
   Food.find({}, (err, foods) => {
     let result = [];
     foods.forEach(food => {
       data.forEach(datum => {
+        console.log('Yewo2: ' + JSON.stringify(data));
         // Check if already stored bussiness id is in the result data
         if (food.bussid === datum.id) {
           // if found add going field to result data with the value, number of count found in the database.
@@ -114,8 +116,7 @@ const formattedData = (data, res) => {
         }
       })
     });
-    console.log('Result: '+ JSON.stringify(result));
-    
+   
    // Because we have duplicate data in our result, we first sort it by highest number of going,
     // and then  make it unique by name
      let uniqueResult = ((uniqueByName(result.sort((first, second) => {
